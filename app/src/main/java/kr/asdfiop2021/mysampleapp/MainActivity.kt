@@ -1,5 +1,6 @@
 package kr.asdfiop2021.mysampleapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -74,6 +75,10 @@ class MainActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show()
                             Toast.makeText(this, auth.currentUser?.uid.toString(), Toast.LENGTH_SHORT).show()
+
+                            var intent = Intent(this, BoardListActivity::class.java)
+                            startActivity(intent)
+
                         } else {
                             var msg = task.exception?.message;
                             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
