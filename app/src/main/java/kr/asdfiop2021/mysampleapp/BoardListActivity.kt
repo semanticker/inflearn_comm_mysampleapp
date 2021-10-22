@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ListView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -15,6 +16,8 @@ class BoardListActivity : AppCompatActivity() {
 
     lateinit var LVAdapter : ListViewAdapter
 
+    val list = mutableListOf<Model>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_board_list)
@@ -24,6 +27,10 @@ class BoardListActivity : AppCompatActivity() {
             var intent = Intent(this, BoardWriteActivity::class.java)
             startActivity(intent)
         }
+
+        LVAdapter = ListViewAdapter(list)
+        val lv = findViewById<ListView>(R.id.lv)
+        lv.adapter = LVAdapter
 
         getData()
     }
@@ -43,7 +50,9 @@ class BoardListActivity : AppCompatActivity() {
 
                     var item = dataModel.getValue(Model::class.java)
                     Log.d("BoardListActivity", item.toString())
+                    list!!.add(item!!)
                 }
+                LVAdapter.notifyDataSetChanged()
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
