@@ -12,6 +12,9 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class BoardListActivity : AppCompatActivity() {
+
+    lateinit var LVAdapter : ListViewAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_board_list)
@@ -34,8 +37,13 @@ class BoardListActivity : AppCompatActivity() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values to update the UI
-                Log.d("myRef", dataSnapshot.toString())
+
                 // ...
+                for (dataModel in dataSnapshot.children) {
+
+                    var item = dataModel.getValue(Model::class.java)
+                    Log.d("BoardListActivity", item.toString())
+                }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
